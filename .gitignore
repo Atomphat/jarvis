@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+models/
+logs/
+state.json
+mcp.json
+claude-settings.json
+.pytest_cache/
+.tools/

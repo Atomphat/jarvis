@@ -1,0 +1,14 @@
+#!/bin/bash
+# Launches Jarvis; running inside this bundle lets macOS grant it microphone access.
+# Restarts Jarvis if it crashes; "Quit Jarvis" exits with 0 and ends the loop.
+JARVIS_HOME="${JARVIS_HOME:-$HOME/jarvis}"
+export PATH="$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin"
+export PYTHONPATH="$JARVIS_HOME"
+cd "$JARVIS_HOME" || exit 1
+mkdir -p logs
+while true; do
+  "$JARVIS_HOME/.venv/bin/python" -m jarvis.app >> logs/app.out.log 2>&1
+  [ $? -eq 0 ] && exit 0
+  echo "$(date) jarvis exited with an error; restarting in 3 s" >> logs/app.out.log
+  sleep 3
+done
